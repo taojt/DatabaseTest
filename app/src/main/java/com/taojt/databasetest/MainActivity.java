@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private Button update_data;
     private Button delete_data;
     private Button query_data;
+    private Button replcae_data;
     private MyDatabaseHelper dbHelper;
 
     @Override
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         update_data = (Button) findViewById(R.id.update_data);
         delete_data = (Button) findViewById(R.id.remove_data);
         query_data = (Button) findViewById(R.id.query_data);
+        replcae_data = (Button) findViewById(R.id.replace_data);
         create_db.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +90,31 @@ public class MainActivity extends AppCompatActivity {
 
                     }while (cursor.moveToNext());
 
+                }
+            }
+        });
+
+        replcae_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                db.beginTransaction();
+                try{
+                    db.delete("Book",null,null);
+                    // 手动抛出异常阻止事物进行
+                    /*if(true){
+                        throw new NullPointerException();
+                    }*/
+                    ContentValues values = new ContentValues();
+                    values.put("name","Game of Thrones");
+                    values.put("author", "George Martin");
+                    values.put("price", "23.41");
+                    db.insert("Book", null, values);
+                    db.setTransactionSuccessful();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    db.endTransaction();
                 }
             }
         });
