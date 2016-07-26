@@ -9,7 +9,7 @@ import android.widget.Toast;
  * Created by taojt on 2016/7/26.
  */
 public class MyDatabaseHelper extends SQLiteOpenHelper {
-    public static final String CREATE_BOOK = "create table Book(" + "id integer primary key autoincrement, author text, price real, page integer, name text )";
+    public static final String CREATE_BOOK = "create table Book(" + "id integer primary key autoincrement, author text, price real, pages integer, name text )";
     public static final String CREATE_CATEGRORY = "create table Category(" + "id integer primary key autoincrement, " + "category_name text, " + "category_code integer)";
     private Context myContext;
 
