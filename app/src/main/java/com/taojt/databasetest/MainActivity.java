@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     private Button create_db;
     private Button add_data;
+    private Button update_data;
     private MyDatabaseHelper dbHelper;
 
     @Override
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new MyDatabaseHelper(this, "BookStore.db", null, 3);
         create_db = (Button) findViewById(R.id.create_database);
         add_data = (Button) findViewById(R.id.add_data);
+        update_data = (Button) findViewById(R.id.update_data);
         create_db.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +44,15 @@ public class MainActivity extends AppCompatActivity {
                 values.put("pages", 510);
                 values.put("price", 19.95);
                 db.insert("Book", null, values);
-
+            }
+        });
+        update_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put("price", 11.23);
+                db.update("Book", values, "name = ?", new String[]{"第一行代码"});
 
             }
         });
