@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private Button create_db;
     private Button add_data;
     private Button update_data;
+    private Button remove_data;
     private MyDatabaseHelper dbHelper;
 
     @Override
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         create_db = (Button) findViewById(R.id.create_database);
         add_data = (Button) findViewById(R.id.add_data);
         update_data = (Button) findViewById(R.id.update_data);
+        remove_data = (Button) findViewById(R.id.remove_data);
         create_db.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 values.put("price", 11.23);
                 db.update("Book", values, "name = ?", new String[]{"第一行代码"});
 
+            }
+        });
+        remove_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                db.delete("Book", "pages > ?",new String[]{"520"});
             }
         });
     }
